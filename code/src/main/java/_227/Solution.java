@@ -31,11 +31,43 @@ package _227;
 // 👍 183 👎 0
 
 
+import java.util.Stack;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int calculate(String s) {
-        
-        return 0;
+        Stack<Integer> stack = new Stack<>();
+        char flag = '+';
+        int num = 0;
+        boolean first = false;
+        s=s.replace(" ","");
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                num = num * 10 + c - '0';
+                first = true;
+            }
+            if (c == '-' || c == '+' || c == '*' || c == '/' || i == s.length() - 1) {
+                if (first) {
+                    if (flag == '-') {
+                        stack.push(-num);
+                    } else if (flag == '+') {
+                        stack.push(num);
+                    } else if (flag == '*') {
+                        stack.push(num * stack.pop());
+                    } else if (flag == '/') {
+                        stack.push(stack.pop() / num);
+                    }
+                }
+                flag = c;
+                num = 0;
+            }
+        }
+        int sum = 0;
+        for (Integer integer : stack) {
+            sum = sum + integer;
+        }
+        return sum;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
