@@ -39,25 +39,28 @@ class Solution {
         Stack<Integer> stack = new Stack<>();
         char flag = '+';
         int num = 0;
-        boolean first = false;
-        s=s.replace(" ","");
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isDigit(c)) {
                 num = num * 10 + c - '0';
-                first = true;
+            }
+            if (c == '(') {
+                int endIndex = s.lastIndexOf(")");
+                num = calculate(s.substring(i + 1, endIndex));
+                i = endIndex;
             }
             if (c == '-' || c == '+' || c == '*' || c == '/' || i == s.length() - 1) {
-                if (first) {
-                    if (flag == '-') {
-                        stack.push(-num);
-                    } else if (flag == '+') {
-                        stack.push(num);
-                    } else if (flag == '*') {
-                        stack.push(num * stack.pop());
-                    } else if (flag == '/') {
-                        stack.push(stack.pop() / num);
+                if (flag == '-') {
+                    if (stack.isEmpty()) {
+                        continue;
                     }
+                    stack.push(-num);
+                } else if (flag == '+') {
+                    stack.push(num);
+                } else if (flag == '*') {
+                    stack.push(num * stack.pop());
+                } else if (flag == '/') {
+                    stack.push(stack.pop() / num);
                 }
                 flag = c;
                 num = 0;

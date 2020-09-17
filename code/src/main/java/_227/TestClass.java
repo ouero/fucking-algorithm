@@ -33,5 +33,15 @@ public class TestClass {
         int s = solution.calculate(" 3/2 ");
         Assert.assertEquals(1,s);
     }
+    @Test
+    public void test06() {
+        int s = solution.calculate(" 3/2");
+        Assert.assertEquals(1,s);
+    }
 
+    @Test
+    public void test07() {
+        int s = solution.calculate("6+(3/(2+1)+1)*2 ");
+        Assert.assertEquals(10,s);
+    }
 }
